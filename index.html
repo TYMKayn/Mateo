@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Juntos desde 💞</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="inicio">
+    <h1>Elige nuestra fecha especial 💞</h1>
+    <input type="date" id="fecha">
+    <button id="continuarBtn">Continuar</button>
+  </div>
+
+  <main style="display:none;">
+    <div class="contador">
+      <span id="dias">00</span>d :
+      <span id="horas">00</span>h :
+      <span id="minutos">00</span>m :
+      <span id="segundos">00</span>s
+    </div>
+
+    <audio id="musica" src="margarita.mp3" loop></audio>
+    <button class="musicaBtn" onclick="toggleMusic()">🎵</button>
+
+    <section class="recuerdo">
+      <img src="imag1.jpeg" alt="Primera foto">
+      <p>Desde nuestra primera foto juntos, supe que nuestro futuro sería hermoso 💫</p>
+    </section>
+
+    <section class="recuerdo">
+      <img src="imag4.jpeg" alt="Sonrisa">
+      <p>Me encanta tu sonrisa y tu pequeño hoyuelito 🌷</p> <!---- Eres la única que me saca una sonrisa tan honesta y original--->
+    </section>
+
+    <section class="recuerdo">
+      <img src="imag2.jpeg" alt="Naturaleza">
+      <p>Aunque mis ojos esten cansados te veo tan hermosa como siempre</p> <!--Nuestro primer “viaje” juntos 🌄--->
+    </section>
+
+    <section class="recuerdo">
+      <img src="imag3.jpeg" alt="Concierto">
+      <p>Aunque a veces peleamos, siempre lo superaremos todo juntos 💕</p>
+    </section>
+
+    <footer class="final">
+      <p>Gracias por compartir este viaje conmigo 💖</p>
+    </footer>
+  </main>
+
+  <canvas id="petalos"></canvas>
+
+  <script>
+    let fechaInicio = null;
+
+    document.getElementById('continuarBtn').addEventListener('click', () => {
+      const fechaElegida = document.getElementById('fecha').value;
+      if (fechaElegida) {
+        fechaInicio = new Date(fechaElegida).getTime();
+        document.querySelector('.inicio').style.display = 'none';
+        document.querySelector('main').style.display = 'block';
+        iniciarContador();
+      }
+    });
+
+    function iniciarContador() {
+      setInterval(() => {
+        const ahora = new Date().getTime();
+        const diferencia = ahora - fechaInicio;
+
+        const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+        document.getElementById("dias").innerText = dias.toString().padStart(2, '0');
+        document.getElementById("horas").innerText = horas.toString().padStart(2, '0');
+        document.getElementById("minutos").innerText = minutos.toString().padStart(2, '0');
+        document.getElementById("segundos").innerText = segundos.toString().padStart(2, '0');
+      }, 1000);
+    }
+
+    function toggleMusic() {
+      const audio = document.getElementById('musica');
+      if (audio.paused) audio.play();
+      else audio.pause();
+    }
+
+    // Aparición suave de recuerdos
+    window.addEventListener('scroll', () => {
+      document.querySelectorAll('.recuerdo').forEach(el => {
+        const pos = el.getBoundingClientRect().top;
+        if (pos < window.innerHeight - 100) el.classList.add('visible');
+      });
+    });
+
+    // Animación de pétalos 🌸
+    const canvas = document.getElementById('petalos');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+    const petalos = [];
+
+    const petaloImg = new Image();
+    petaloImg.src = 'cora.png';
+
+    class Petalo {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * -height;
+        this.size = 15 + Math.random() * 25;
+        this.speed = 1 + Math.random() * 2;
+        this.angle = Math.random() * Math.PI * 2;
+      }
+      update() {
+        this.y += this.speed;
+        this.x += Math.sin(this.angle);
+        if (this.y > height) {
+          this.y = -10;
+          this.x = Math.random() * width;
+        }
+      }
+      draw() {
+        ctx.drawImage(petaloImg, this.x, this.y, this.size, this.size);
+      }
+    }
+
+    for (let i = 0; i < 40; i++) petalos.push(new Petalo());
+
+    function animarPetalos() {
+      ctx.clearRect(0, 0, width, height);
+      petalos.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animarPetalos);
+    }
+    petaloImg.onload = animarPetalos;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>

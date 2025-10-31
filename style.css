@@ -1,0 +1,159 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(ellipse at bottom, #0a0a1a, #000);
+  color: #fff;
+  overflow-x: hidden;
+  font-family: 'Quicksand', sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('brillo.png') repeat;
+  opacity: 0.25;
+  animation: stars 20s linear infinite;
+  z-index: 0;
+}
+
+@keyframes stars {
+  from { background-position: 0 0; }
+  to { background-position: 1000px 1000px; }
+}
+
+/* Inicio */
+.inicio {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.inicio h1 {
+  font-family: 'Great Vibes', cursive;
+  color: #ffb6c1;
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.inicio input {
+  padding: 10px;
+  border-radius: 15px;
+  border: none;
+  font-size: 1em;
+  outline: none;
+  margin-bottom: 20px;
+}
+
+.inicio button {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 25px;
+  background-color: #ff7fa5;
+  color: white;
+  cursor: pointer;
+  font-family: 'Quicksand';
+  font-size: 1em;
+  transition: 0.3s;
+}
+
+.inicio button:hover {
+  background-color: #ff98b7;
+  transform: scale(1.05);
+}
+
+/* Contador */
+.contador {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  background: rgba(255,182,193,0.2);
+  padding: 10px 20px;
+  border-radius: 15px;
+  font-size: 1.1em;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+}
+
+/* Música */
+.musicaBtn {
+  position: fixed;
+  bottom: 20px;
+  right: 25px;
+  background: rgba(255,255,255,0.15);
+  border: none;
+  font-size: 1.5em;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  color: #fff;
+  z-index: 3;
+  transition: 0.3s;
+}
+.musicaBtn:hover {
+  transform: scale(1.1);
+  background: rgba(255,255,255,0.3);
+}
+
+/* Recuerdos */
+main {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.recuerdo {
+  margin: 120px auto;
+  width: 80%;
+  max-width: 600px;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.recuerdo.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.recuerdo img {
+  width: 100%;
+  border-radius: 20px;
+  box-shadow: 0 0 30px rgba(255,182,193,0.4);
+}
+
+.recuerdo p {
+  margin-top: 20px;
+  font-family: 'Great Vibes', cursive;
+  color: #ffd6e0;
+  font-size: 1.8em;
+}
+
+/* Final */
+.final {
+  margin-bottom: 100px;
+  font-family: 'Great Vibes', cursive;
+  color: #ffb6c1;
+  font-size: 2em;
+}
+
+/* Canvas pétalos */
+#petalos {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
